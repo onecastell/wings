@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import { boolean, select, text } from '@storybook/addon-knobs/react';
+import styled, { ThemeProvider } from 'styled-components';
+import { select, text } from '@storybook/addon-knobs/react';
+import theme from '../../styles/theme';
 import Image from '../../../src/components/Image';
 
 import coffeeshop from '../../img/coffeeshop.jpg';
@@ -23,60 +24,60 @@ export const ImageInfo = `
 `;
 
 export const ImageStory = () => (
-  <Wrapper>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <Image
-      url={select(
-        'image',
-        {
-          [coffeeshop]: 'coffeeshop',
-          [field]: 'field',
-          [jellyfish]: 'jellyfish',
-          [street]: 'street',
-        },
-        coffeeshop,
-      )}
-      type={select(
-        'type',
-        {
-          default: 'default',
-          large: 'large',
-          half: 'half',
-          screenWidth: 'screenWidth',
-          offGridWider: 'offGridWider',
-          left: 'left',
-          right: 'right',
-          offGridLeft: 'offGridLeft',
-          offGridRight: 'offGridRight',
-        },
-        'default',
-      )}
-      caption={text('caption', '')}
-      author={text('author', '')}
-      copyright={text('copyright', '')}
-      captionColor={text('caption color', '#000')}
-      shadow={boolean('shadow', true)}
-      borderRadius={text('border radius', '4')}
-    />
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-  </Wrapper>
+  <ThemeProvider theme={theme}>
+    <Wrapper>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <Image
+        url={select(
+          'image',
+          {
+            [coffeeshop]: 'coffeeshop',
+            [field]: 'field',
+            [jellyfish]: 'jellyfish',
+            [street]: 'street',
+          },
+          coffeeshop,
+        )}
+        type={select(
+          'type',
+          {
+            default: 'default',
+            large: 'large',
+            half: 'half',
+            screenWidth: 'screenWidth',
+            offGridWider: 'offGridWider',
+            left: 'left',
+            right: 'right',
+            offGridLeft: 'offGridLeft',
+            offGridRight: 'offGridRight',
+          },
+          'default',
+        )}
+        caption={text('caption', '')}
+        author={text('author', '')}
+        copyright={text('copyright', '')}
+        captionColor={text('caption color', '#000')}
+      />
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </Wrapper>
+  </ThemeProvider>
 );

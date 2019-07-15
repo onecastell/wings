@@ -7,6 +7,7 @@ export { default as ChevronLeft } from './ChevronLeft';
 export { default as ChevronRight } from './ChevronRight';
 export { default as Envelope } from './Envelope';
 export { default as Eye } from './Eye';
+export { default as Info } from './Info';
 export { default as Message } from './Message';
 export { default as Pause } from './Pause';
 export { default as Pin } from './Pin';

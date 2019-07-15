@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Eye } from './icons';
+import { getContrastColor } from '../lib/utils';
+import { Info } from './icons';
 import { Caption } from './atoms';
 
 const StyledFigure = styled.figure`
+  position: relative;
   max-width: 100%;
   display: block;
   width: auto;
@@ -63,25 +64,24 @@ const StyledFigure = styled.figure`
 `;
 
 const Figcaption = styled(Caption)`
-  > * + * {
-    margin-left: 20px;
-  }
+  background-color: rgb(255, 255, 255, 0.4);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 `;
 
 const StyledImage = styled.img`
+  display: block;
   width: 100%;
-  border-radius: ${({ borderRadius }) => `${borderRadius}px`};
-  box-shadow: ${({ shadow }) => (shadow ? '0 0 20px 0 rgba(0, 0, 0, 0.2)' : 'none')};
+  border-radius: ${({ theme }) => theme.imageBorderRadius};
+  box-shadow: ${({ theme }) => theme.imageShadow};
 `;
 
-const StyledCaption = styled('span')`
-  color: ${({ captionColor }) => captionColor};
-`;
-
-const InfoSpan = styled.div`
+const InfoP = styled.p`
   position: relative;
-  display: inline;
-  vertical-align: middle;
+  margin-top: 0;
   svg {
     width: 20px;
     height: 20px;
@@ -96,69 +96,44 @@ const InfoSpan = styled.div`
   }
 `;
 
-export default class Image extends Component {
-  static propTypes = {
-    /** Author text */
-    author: PropTypes.string,
-    /** Border radius, pixels. Default = 4 */
-    borderRadius: PropTypes.string,
-    /** Caption text */
-    caption: PropTypes.string,
-    /** Caption text color. Color code string. */
-    captionColor: PropTypes.string,
-    /** Copyright text */
-    copyright: PropTypes.string,
-    /** Toggles background shadow for the image. */
-    shadow: PropTypes.bool,
-    /** How to display the image. */
-    type: PropTypes.oneOf([
-      'default',
-      'half',
-      'large',
-      'screenWidth',
-      'offGridWider',
-      'left',
-      'right',
-      'offGridLeft',
-      'offGridRight',
-    ]),
-  };
-
-  static defaultProps = {
-    author: '',
-    borderRadius: '4',
-    caption: '',
-    captionColor: '#000',
-    copyright: '',
-    shadow: false,
-    type: 'default',
-  };
-
-  render() {
-    const {
-      author,
-      borderRadius,
-      caption,
-      captionColor,
-      copyright,
-      shadow,
-      type,
-      url,
-    } = this.props;
-    return (
-      <StyledFigure className={`${type}`}>
-        <StyledImage borderRadius={borderRadius} shadow={shadow} src={url} />
-        <Figcaption textColor={captionColor} padding=".5rem">
-          {caption ? <StyledCaption>{caption}</StyledCaption> : null}
-          {author ? (
-            <InfoSpan>
-              <Eye title="Image author" stroke="#000" />
-              {author}
-            </InfoSpan>
-          ) : null}
-          {copyright ? <InfoSpan>&copy; {copyright}</InfoSpan> : null}
-        </Figcaption>
-      </StyledFigure>
-    );
+const InfoButton = styled.div`
+  background-color: ${({ theme }) => theme.primaryColor};
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 3;
+  svg {
+    fill: ${({ theme }) =>
+    getContrastColor({
+      backgroundColor: theme.primaryColor,
+      colors: { light: theme.textColor, dark: theme.textColorDark },
+    })};
+    width: 100%;
+    height: 100%;
   }
-}
+`;
+
+export default ({ author, caption, copyright, type = 'default', url }) => {
+  const [showInfo, setShowInfo] = useState(false);
+  return (
+    <StyledFigure className={`${type}`}>
+      <StyledImage src={url} />
+      {showInfo ? (
+        <Figcaption>
+          {caption ? <InfoP>{caption}</InfoP> : null}
+          {author ? <InfoP>author: {author}</InfoP> : null}
+          {copyright ? <InfoP>copyright: {copyright}</InfoP> : null}
+        </Figcaption>
+      ) : null}
+      {author || caption || copyright ? (
+        <InfoButton onClick={() => setShowInfo(!showInfo)}>
+          <Info />
+        </InfoButton>
+      ) : null}
+    </StyledFigure>
+  );
+};
