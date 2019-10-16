@@ -1,3 +1,5 @@
+const createPaginatedPages = require('gatsby-paginate');
+
 const query = require('./query');
 const { patchI18n, makeShareUrls } = require('../../utils');
 const routing = require('../../../services/routing');
@@ -128,6 +130,24 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           context,
         });
       });
+
+      if (field === 'articles') {
+        createPaginatedPages({
+          edges: nodes,
+          createPage,
+          pageTemplate: require.resolve('../../../src/templates/Archive'),
+          pageLength: 12,
+          pathPrefix: '/articles',
+          context: {
+            node: {
+              translations: [],
+              platforms: { search: {}, facebook: {}, twitter: {} },
+            },
+            siteMeta: siteMetadata,
+            shareUrls: null,
+          },
+        });
+      }
     }),
   );
 };

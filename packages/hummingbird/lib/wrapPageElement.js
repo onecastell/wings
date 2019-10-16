@@ -34,10 +34,11 @@ const PageWrapper = ({
   const {
     title,
     platforms = {},
-    locale: { id: localeId = DEFAULT_LOCALE },
+    locale: { id: localeId = DEFAULT_LOCALE } = {},
     translations,
   } = node;
   const language = localeId.split('-')[0];
+
   useEffect(() => {
     if (typeof window !== 'undefined' && translations && translations.length > 0) {
       if (

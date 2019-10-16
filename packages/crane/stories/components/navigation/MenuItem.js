@@ -86,7 +86,7 @@ export const MenuItemInfo = `
   The styles of a menu item can be extended using styled components:
   
   ~~~js
-  import { MenuItem } from '@bolster/crane';
+  import { MenuItem } from '@wingscms/crane';
 
   const StyledMenuItem = styled(MenuItem)\`
     a {
